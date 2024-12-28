@@ -1,6 +1,7 @@
 from parameter import Params
 from math import pow, factorial
 from math import inf
+from simulation import simulate
 
 
 ###M/M/1
@@ -252,6 +253,12 @@ def solution(lumbda, mu, numberOfServers=1, systemCapacity=inf):
         if systemCapacity == inf:
           MMC(lumbda, mu, numberOfServers).display()
         else: MMCK(lumbda, mu, numberOfServers, systemCapacity).display()
+      
+      ask = input("Need To Simulate: Enter [yes] if you want: ")
+      
+      if ask == 'yes':
+        simulate(lumbda, mu)
+      
         
 
 def ask_user():

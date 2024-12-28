@@ -44,11 +44,9 @@ class Params:
         """Displays the calculated performance measures."""
         print(f" L = {self.findL()} \n Lq = {self.findLq()} \n W = {self.findW()} \n Wq = {self.findWq()}")
 
-    def generate_random_params(self, num_customers):
+     
 
-        p1 = random.exponential(scale=self.lumbda, size=num_customers)
-        p2 = random.exponential(scale=self.mu, size=num_customers)
-
-        return p1, p2
+         
+        
 
         
