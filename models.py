@@ -10,7 +10,7 @@ class MM1(Params):
     Represents an M/M/1 queuing system.
     """
 
-    def __init__(self, lumbda, mu):
+    def _init_(self, lumbda, mu):
         """
         Initializes the M/M/1 system parameters.
         """
@@ -18,7 +18,7 @@ class MM1(Params):
         if lumbda >= mu:
             raise ValueError("Arrival rate (lumbda) must be less than service rate (mu) for stability.")
 
-        super().__init__(lumbda, mu)   
+        super()._init_(lumbda, mu)   
 
 
     def findL(self):
@@ -52,7 +52,7 @@ class MM1K(Params):
     Represents an M/M/1/K queuing system.
     """
 
-    def __init__(self, lumbda, mu, systemCapacity):
+    def _init_(self, lumbda, mu, systemCapacity):
         """
         Initializes the M/M/1/K system parameters.
         """
@@ -62,7 +62,7 @@ class MM1K(Params):
         if systemCapacity <= 0:
             raise ValueError("System capacity must be a positive integer.")
 
-        super().__init__(lumbda, mu, systemCapacity=systemCapacity)
+        super()._init_(lumbda, mu, systemCapacity=systemCapacity)
         self._sc = systemCapacity
         self._ru = self.findRu()
         self._ruK = pow(self._ru, systemCapacity)
@@ -111,7 +111,7 @@ class MMC(Params):
     Represents an M/M/c queuing system.
     """
 
-    def __init__(self, lumbda, mu, numberOfServers):
+    def _init_(self, lumbda, mu, numberOfServers):
         """
         Initializes the M/M/c system parameters.
         """
@@ -121,7 +121,7 @@ class MMC(Params):
         if numberOfServers <= 0:
             raise ValueError("Number of servers must be a positive integer.")
 
-        super().__init__(lumbda, mu, numberOfServers=numberOfServers)
+        super()._init_(lumbda, mu, numberOfServers=numberOfServers)
         self.c = numberOfServers
         self.findR = self.lumbda / self.mu   
         self.P0 = self.findP0() 
@@ -182,7 +182,7 @@ class MMCK(Params):
     Represents an M/M/c/K queuing system.
     """
 
-    def __init__(self, lumbda, mu, numberOfServers, systemCapacity):
+    def _init_(self, lumbda, mu, numberOfServers, systemCapacity):
         """
         Initializes the M/M/c/K system parameters.
         """
@@ -194,7 +194,7 @@ class MMCK(Params):
         if systemCapacity <= 0:
             raise ValueError("System capacity must be a positive integer.")
 
-        super().__init__(lumbda, mu, numberOfServers=numberOfServers, systemCapacity=systemCapacity)
+        super()._init_(lumbda, mu, numberOfServers=numberOfServers, systemCapacity=systemCapacity)
         self.c = numberOfServers
         self.sc = systemCapacity
         self.findR = self.lumbda / self.mu   
@@ -245,7 +245,7 @@ class MMCK(Params):
 def solution(lumbda, mu, numberOfServers=1, systemCapacity=inf):
          
       if numberOfServers == 1:
-        if systemCapacity == inf:
+        if systemCapacity == inf or systemCapacity == 0:
           MM1(lumbda, mu).display()
         else: MM1K(lumbda, mu, systemCapacity).display()
       
@@ -262,34 +262,9 @@ def solution(lumbda, mu, numberOfServers=1, systemCapacity=inf):
         
 
 def ask_user():
-    
-    model = input("Enter the model you need (MM1, MM1K, MMC, MMCK): ")
-
-    # Ask for parameters based on the chosen model
-    if model == "MM1":
-        arrival_rate = float(input("Enter the arrival rate (lambda): "))
-        service_rate = float(input("Enter the service rate (mu): "))
-        solution(arrival_rate, service_rate)
-
-    elif model == "MM1K":
-        arrival_rate = float(input("Enter the arrival rate (lambda): "))
-        service_rate = float(input("Enter the service rate (mu): "))
-        capacity = int(input("Enter the system capacity (k): "))
-        solution(arrival_rate, service_rate, systemCapacity=capacity)
-
-    elif model == "MMC":
-        arrival_rate = float(input("Enter the arrival rate (lambda): "))
-        service_rate = float(input("Enter the service rate (mu): "))
-        servers = int(input("Enter the Number of Servers (c):"))
-        solution(arrival_rate, service_rate, numberOfServers=servers)
-
-    elif model == "MMCK":
-        arrival_rate = float(input("Enter the arrival rate (lambda): "))
-        service_rate = float(input("Enter the service rate (mu): "))
-        servers = int(input("Enter the Number of Servers (c):"))
-        capacity = int(input("Enter the system capacity (k): "))
-        solution(arrival_rate, service_rate, servers, capacity)
-
-    else:
-        print("Invalid model selection.")
-
+    arrival_rate = float(input("Enter the arrival rate (lambda): "))
+    service_rate = float(input("Enter the service rate (mu): "))
+    servers = int(input("Enter the Number of Servers (c):"))
+    capacity_input = input("Enter the system capacity (k) (leave empty for infinity): ")
+    capacity = inf if capacity_input == "" else int(capacity_input)
+    solution(arrival_rate, service_rate, servers,capacity)
