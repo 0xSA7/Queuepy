@@ -1,11 +1,11 @@
 from numpy import random
-import math
-import pandas as pd
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 
 
-def simulate(lumbda, mu):
+completion_times, arrival_times = [], []
+
+def simulate(lumbda, mu, num_customers=0):
     """Simulates a single-server queuing system.
 
     Args:
@@ -15,8 +15,14 @@ def simulate(lumbda, mu):
     Returns:
         None. Prints the simulation results to the console.
     """
+    
+    # Load the values of Global Variables
+    global completion_times, arrival_times
+    
+    # Check if app operates as CLI vs GUI
+    if num_customers == 0:
+        num_customers = int(input("Enter the number of customers: "))
 
-    num_customers = int(input("Enter Number of Customers: "))
     interarrival_times = random.exponential(scale=lumbda, size=num_customers)
     service_times  = random.exponential(scale=mu, size=num_customers)
 
@@ -95,17 +101,14 @@ def simulate(lumbda, mu):
                       completion_times,  time_in_queue, time_in_system))
     ]
 
+    # Calculate performance metrics          
+    performance_metrics(time_in_queue, service_times, interarrival_times, time_in_system)
+    
     # Use tabulate to format the output
     print(tabulate(table_data, headers=["Customer", "Arrival Time", "Service Begin Time",
                                       "Service Time", "Service End Time",
                                       "Time in Queue", "Time in System"],
                    tablefmt="fancy_grid"))
-    # Calculate performance metrics          
-    performance_metrics(time_in_queue, service_times, interarrival_times, time_in_system)
-    
-    # Print the performance metrics
-    chart(completion_times, arrival_times)
-
 
 
 def performance_metrics(time_in_queue, service_times, interarrival_times, time_in_system):
@@ -123,12 +126,15 @@ def performance_metrics(time_in_queue, service_times, interarrival_times, time_i
     print(f"Average Time Between Arrivals: {avg_interarrival_time:.2f}")
     print(f"Average Waiting Time of Those Who Wait: {avg_waiting_time_those_who_wait:.2f}")
     print(f"Average Time a Customer Spends in the System: {avg_time_in_system:.2f}")
-    print("\n")
+    print("\n",flush=True)
 
 
 
-def chart(service_end_times, arrival_times):
-
+def chart():
+    # Load the values of the Global Variable
+    global completion_times, arrival_times
+    service_end_times = completion_times
+    
     time_points = []
     customer_count = []
     current_customers = 0

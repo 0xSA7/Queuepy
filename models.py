@@ -1,7 +1,7 @@
 from parameter import Params
 from math import pow, factorial
 from math import inf
-from simulation import simulate
+from simulation import simulate, chart
 
 
 ###M/M/1
@@ -10,7 +10,7 @@ class MM1(Params):
     Represents an M/M/1 queuing system.
     """
 
-    def _init_(self, lumbda, mu):
+    def __init__(self, lumbda, mu):
         """
         Initializes the M/M/1 system parameters.
         """
@@ -18,7 +18,7 @@ class MM1(Params):
         if lumbda >= mu:
             raise ValueError("Arrival rate (lumbda) must be less than service rate (mu) for stability.")
 
-        super()._init_(lumbda, mu)   
+        super().__init__(lumbda, mu)   
 
 
     def findL(self):
@@ -45,6 +45,13 @@ class MM1(Params):
         """Calculates and returns the server utilization (Ru)."""
         return self.lumbda / self.mu
 
+    def display(self):
+        print(f"L: {self.findL()}")
+        print(f"Lq: {self.findLq()}")
+        print(f"W: {self.findW()}")
+        print(f"Wq: {self.findWq()}")
+        print(f"Ru: {self.findRu()}")
+
 
 ####M/M/1/K
 class MM1K(Params):  
@@ -52,7 +59,7 @@ class MM1K(Params):
     Represents an M/M/1/K queuing system.
     """
 
-    def _init_(self, lumbda, mu, systemCapacity):
+    def __init__(self, lumbda, mu, systemCapacity):
         """
         Initializes the M/M/1/K system parameters.
         """
@@ -62,7 +69,7 @@ class MM1K(Params):
         if systemCapacity <= 0:
             raise ValueError("System capacity must be a positive integer.")
 
-        super()._init_(lumbda, mu, systemCapacity=systemCapacity)
+        super().__init__(lumbda, mu, systemCapacity=systemCapacity)
         self._sc = systemCapacity
         self._ru = self.findRu()
         self._ruK = pow(self._ru, systemCapacity)
@@ -104,6 +111,13 @@ class MM1K(Params):
         """Calculates and returns the server utilization (Ru)."""
         return self.lumbda / self.mu
 
+    def display(self):
+        print(f"L: {self.findL()}")
+        print(f"Lq: {self.findLq()}")
+        print(f"W: {self.findW()}")
+        print(f"Wq: {self.findWq()}")
+        print(f"Ru: {self.findRu()}")
+
 
 ###M/M/C
 class MMC(Params):   
@@ -111,7 +125,7 @@ class MMC(Params):
     Represents an M/M/c queuing system.
     """
 
-    def _init_(self, lumbda, mu, numberOfServers):
+    def __init__(self, lumbda, mu, numberOfServers):
         """
         Initializes the M/M/c system parameters.
         """
@@ -121,7 +135,7 @@ class MMC(Params):
         if numberOfServers <= 0:
             raise ValueError("Number of servers must be a positive integer.")
 
-        super()._init_(lumbda, mu, numberOfServers=numberOfServers)
+        super().__init__(lumbda, mu, numberOfServers=numberOfServers)
         self.c = numberOfServers
         self.findR = self.lumbda / self.mu   
         self.P0 = self.findP0() 
@@ -174,6 +188,12 @@ class MMC(Params):
                 first += (1 / factorial(i)) * pow(r, i)
             return 1 / (first + ((1 / factorial(c)) * pow(r, c) * ((c * self.mu) / (c * self.mu - self.lumbda))))
 
+    def display(self):
+        print(f"L: {self.findL()}")
+        print(f"Lq: {self.findLq()}")
+        print(f"W: {self.findW()}")
+        print(f"Wq: {self.findWq()}")
+        print(f"Ru: {self.findRu()}")
 
 
 ####M/M/C/K
@@ -182,7 +202,7 @@ class MMCK(Params):
     Represents an M/M/c/K queuing system.
     """
 
-    def _init_(self, lumbda, mu, numberOfServers, systemCapacity):
+    def __init__(self, lumbda, mu, numberOfServers, systemCapacity):
         """
         Initializes the M/M/c/K system parameters.
         """
@@ -194,7 +214,7 @@ class MMCK(Params):
         if systemCapacity <= 0:
             raise ValueError("System capacity must be a positive integer.")
 
-        super()._init_(lumbda, mu, numberOfServers=numberOfServers, systemCapacity=systemCapacity)
+        super().__init__(lumbda, mu, numberOfServers=numberOfServers, systemCapacity=systemCapacity)
         self.c = numberOfServers
         self.sc = systemCapacity
         self.findR = self.lumbda / self.mu   
@@ -241,24 +261,27 @@ class MMCK(Params):
         """Calculates and returns the server utilization (Ru)."""
         return self.findR / self.c
 
+    def display(self):
+        print(f"L: {self.findL()}")
+        print(f"Lq: {self.findLq()}")
+        print(f"W: {self.findW()}")
+        print(f"Wq: {self.findWq()}")
+        print(f"Ru: {self.findRu()}")
+
     
 def solution(lumbda, mu, numberOfServers=1, systemCapacity=inf):
-         
-      if numberOfServers == 1:
+    if numberOfServers == 1:
         if systemCapacity == inf or systemCapacity == 0:
-          MM1(lumbda, mu).display()
-        else: MM1K(lumbda, mu, systemCapacity).display()
-      
-      else: 
+            MM1(lumbda, mu).display()
+        else:
+            MM1K(lumbda, mu, systemCapacity).display()
+    else:
         if systemCapacity == inf:
-          MMC(lumbda, mu, numberOfServers).display()
-        else: MMCK(lumbda, mu, numberOfServers, systemCapacity).display()
-      
-      ask = input("Need To Simulate: Enter [yes] if you want: ")
-      
-      if ask == 'yes':
-        simulate(lumbda, mu)
-      
+            MMC(lumbda, mu, numberOfServers).display()
+        else:
+            MMCK(lumbda, mu, numberOfServers, systemCapacity).display()
+    
+          
         
 
 def ask_user():
@@ -267,4 +290,6 @@ def ask_user():
     servers = int(input("Enter the Number of Servers (c):"))
     capacity_input = input("Enter the system capacity (k) (leave empty for infinity): ")
     capacity = inf if capacity_input == "" else int(capacity_input)
-    solution(arrival_rate, service_rate, servers,capacity)
+    solution(arrival_rate, service_rate, servers, capacity)
+    simulate(arrival_rate, service_rate, 0)
+    chart()
