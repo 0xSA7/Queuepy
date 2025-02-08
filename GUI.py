@@ -69,7 +69,7 @@ def run_simulation():
 
 # Create the main window
 root = tk.Tk()
-root.title("Dynamic Layout")
+root.title("Queueing System Simulator")
 root.geometry("1200x800")  # Initial size
 
 # Configure row and column weights to allow resizing

@@ -9,7 +9,7 @@ cd Queuepy
 pip install -r requirements.txt
 ```
 
-### Using a virtual environment (optional):
+### Using a virtual environment:
 Create a virtual environment (venv) :
 ```bash
 python -m venv /path/to/project/Queuepy/venv
@@ -39,6 +39,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Team
 This project was developed by:
+- Special Thanks (Debugging): [Abdelrahman Hany](https://github.com/DopeBiscuit) 
 - [Mohamed Gomaa](https://github.com/mohamedgomaa15)
 - [Omar Mohamed](https://github.com/omarmohamedga)
-- [0xSA7](https://linkedin.com/in/saleh-diaa-ahmed)
+- [0xSA7](https://linkedin.com/in/saleh-diaa-ahmed) 

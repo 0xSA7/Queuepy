@@ -23,8 +23,8 @@ def simulate(lumbda, mu, num_customers=0):
     if num_customers == 0:
         num_customers = int(input("Enter the number of customers: "))
 
-    interarrival_times = random.exponential(scale=lumbda, size=num_customers)
-    service_times  = random.exponential(scale=mu, size=num_customers)
+    interarrival_times = 0.1*random.exponential(scale=lumbda, size=num_customers)
+    service_times  = 0.1*random.exponential(scale=mu, size=num_customers)
 
     # Check if the length of interarrival_times and service_times are the same
     if len(interarrival_times) != len(service_times):
