@@ -3,11 +3,13 @@ from tkinter import ttk, messagebox, Text, Entry, Button, Frame
 from simulation import simulate, chart
 from models import solution
 from contextlib import contextmanager
+from typing import Generator
 import sys
 import io
 
 @contextmanager
-def capture_output() -> io.StringIO:
+
+def capture_output() -> Generator[io.StringIO, None, None]:
     """Context manager to capture stdout output."""
     new_out = io.StringIO()
     old_out = sys.stdout
