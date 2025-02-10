@@ -1,6 +1,9 @@
 # Queuepy
 A Queueing Models simulation
 
+## Overview
+Queuepy is a simulation tool for queueing models. It allows users to simulate different types of queueing systems, analyze their performance, and visualize the results. The application provides both a Command Line Interface (CLI) and a Graphical User Interface (GUI) for ease of use.
+
 ## Installation
 To install Queuepy, clone the repository and install the dependencies:
 ```bash
@@ -42,4 +45,4 @@ This project was developed by:
 - Special Thanks (Debugging): [Abdelrahman Hany](https://github.com/DopeBiscuit) 
 - [Mohamed Gomaa](https://github.com/mohamedgomaa15)
 - [Omar Mohamed](https://github.com/omarmohamedga)
-- [0xSA7](https://linkedin.com/in/saleh-diaa-ahmed) 
+- [0xSA7](https://linkedin.com/in/saleh-diaa-ahmed)

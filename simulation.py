@@ -1,16 +1,17 @@
 from numpy import random
 from tabulate import tabulate
 import matplotlib.pyplot as plt
-
+from typing import List
 
 completion_times, arrival_times = [], []
 
-def simulate(lumbda, mu, num_customers=0):
+def simulate(lumbda: float, mu: float, num_customers: int = 0) -> None:
     """Simulates a single-server queuing system.
 
     Args:
-        interarrival_times (List[float]): A list of interarrival times.
-        service_times (List[float]): A list of service times.
+        lumbda (float): The arrival rate.
+        mu (float): The service rate.
+        num_customers (int): The number of customers to simulate. Defaults to 0.
 
     Returns:
         None. Prints the simulation results to the console.
@@ -111,7 +112,18 @@ def simulate(lumbda, mu, num_customers=0):
                    tablefmt="fancy_grid"))
 
 
-def performance_metrics(time_in_queue, service_times, interarrival_times, time_in_system):
+def performance_metrics(time_in_queue: List[float], service_times: List[float], interarrival_times: List[float], time_in_system: List[float]) -> None:
+    """Calculates and prints performance metrics for the queuing system.
+
+    Args:
+        time_in_queue (List[float]): List of times customers spend in the queue.
+        service_times (List[float]): List of service times.
+        interarrival_times (List[float]): List of interarrival times.
+        time_in_system (List[float]): List of times customers spend in the system.
+
+    Returns:
+        None. Prints the performance metrics to the console.
+    """
   # Calculate performance metrics
     avg_waiting_time = sum(time_in_queue) / len(time_in_queue)
     avg_service_time = sum(service_times) / len(service_times)
@@ -130,7 +142,12 @@ def performance_metrics(time_in_queue, service_times, interarrival_times, time_i
 
 
 
-def chart():
+def chart() -> None:
+    """Generates and displays a chart of the number of customers in the system over time.
+
+    Returns:
+        None. Displays a chart using matplotlib.
+    """
     # Load the values of the Global Variable
     global completion_times, arrival_times
     service_end_times = completion_times

@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox,Text, Entry, Button, Frame
+from tkinter import ttk, messagebox, Text, Entry, Button, Frame
 from simulation import simulate, chart
 from models import solution
 from contextlib import contextmanager
@@ -7,7 +7,8 @@ import sys
 import io
 
 @contextmanager
-def capture_output():
+def capture_output() -> io.StringIO:
+    """Context manager to capture stdout output."""
     new_out = io.StringIO()
     old_out = sys.stdout
     sys.stdout = new_out
@@ -16,14 +17,15 @@ def capture_output():
     finally:
         sys.stdout = old_out
 
-def display_output(output):
+def display_output(output: str) -> None:
     """Displays simulation outputs in the GUI."""
     text_output.configure(state="normal")
     text_output.insert(tk.END, output)
     text_output.insert(tk.END, "\n"+100*"="+"\n")
     text_output.configure(state="disabled")
 
-def run_solution():
+def run_solution() -> None:
+    """Runs the queuing solution and displays the output in the GUI."""
     try:
         # Retrieve inputs
         arrival_rate = float(entry_arrival_rate.get())
@@ -45,7 +47,8 @@ def run_solution():
     except Exception as e:
         messagebox.showerror("Error", f"{str(e)}")
 
-def run_simulation():
+def run_simulation() -> None:
+    """Runs the queuing simulation and displays the output in the GUI."""
     try:
         # Retrieve inputs
         arrival_rate = float(entry_arrival_rate.get())
@@ -123,15 +126,7 @@ btn_run_solution.grid(row=0, column=0, sticky="ew", pady=2)
 btn_run_simulation = Button(buttons_frame, text="Run Simulation", command=run_simulation)
 btn_run_simulation.grid(row=1, column=0, sticky="ew", pady=2)
 
-# # Output frame (Bottom)
-# output_frame = Frame(root, padx=5, pady=5)
-# output_frame.grid(row=2, column=0, sticky="nsew")
-
-# # Configure the output frame
-# output_frame.columnconfigure(0, weight=1)
-# output_frame.rowconfigure(0, weight=1)
-
-# Add text field to output_frame
+# Output frame (Bottom)
 text_output = Text(root, wrap="word")
 text_output.grid(row=2, column=0, sticky="nsew")
 

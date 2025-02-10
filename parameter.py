@@ -7,7 +7,7 @@ class Params:
     This class serves as an abstract base class for specific queuing models.
     """
 
-    def __init__(self, lumbda, mu, numberOfServers=1, systemCapacity=inf):
+    def __init__(self, lumbda: float, mu: float, numberOfServers: int = 1, systemCapacity: float = inf) -> None:
         """
         Initializes the parameters.
         """
@@ -16,37 +16,36 @@ class Params:
         self.numberOfServers = numberOfServers
         self.systemCapacity = systemCapacity
 
-    def findL(self):
+    def findL(self) -> float:
         """Calculates and returns the average number of customers in the system (L)."""
         raise NotImplementedError("This method should be implemented in subclasses.")
 
-    def findLq(self):
+    def findLq(self) -> float:
         """Calculates and returns the average number of customers in the queue (Lq)."""
         raise NotImplementedError("This method should be implemented in subclasses.")
 
-    def findW(self):
+    def findW(self) -> float:
         """Calculates and returns the average time a customer spends in the system (W)."""
         raise NotImplementedError("This method should be implemented in subclasses.")
 
-    def findWq(self):
+    def findWq(self) -> float:
         """Calculates and returns the average time a customer spends in the queue (Wq)."""
         raise NotImplementedError("This method should be implemented in subclasses.")
 
-    def findPk(self, k):
+    def findPk(self, k: int) -> float:
         """Calculates and returns the probability of having k customers in the system (Pk)."""
         raise NotImplementedError("This method should be implemented in subclasses.")
 
-    def findRu(self):
+    def findRu(self) -> float:
         """Calculates and returns the server utilization (Ru)."""
         raise NotImplementedError("This method should be implemented in subclasses.")
 
-    def display(self):
+    def display(self) -> None:
         """Displays the calculated performance measures."""
         print(f" L = {self.findL()} \n Lq = {self.findLq()} \n W = {self.findW()} \n Wq = {self.findWq()}")
 
-     
 
-         
-        
 
-        
+
+
+
